@@ -10,6 +10,9 @@ module.exports.put = (event, context, callback) => {
     const response = {
       statusCode: error ? 500 : 200,
       body: JSON.stringify(result),
+      headers: {
+        "Access-Control-Allow-Origin" : "*",
+      },
     };
     context.succeed(response);
   });
@@ -20,6 +23,9 @@ module.exports.sum = (event, context, callback) => {
     const response = {
       statusCode: error ? 500 : 200,
       body: JSON.stringify(result),
+      headers: {
+        "Access-Control-Allow-Origin" : "*",
+      },
     };
     context.succeed(response);
   });
