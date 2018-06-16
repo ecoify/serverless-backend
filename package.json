@@ -1,0 +1,13 @@
+{
+  "name": "carbon",
+  "version": "0.1.0",
+  "description": "Serverless Carbon tracker for ecoify",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Simon Siegert",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.6.7"
+  }
+}

@@ -1,0 +1,66 @@
+service: carbon
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: eu-central-1
+  stage: dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:eu-central-1:*:*"
+
+functions:
+  put:
+    handler: handler.put
+    events:
+      - http:
+          method: PUT
+          path: carbon/{id}
+          cors: true
+  sum:
+    handler: handler.sum
+    events:
+      - http:
+          method: GET
+          path: carbon
+          cors: true
+  one:
+    handler: handler.one
+    events:
+      - http:
+          method: GET
+          path: carbon/{id}
+          cors: true
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          method: DELETE
+          path: carbon/{id}
+          cors: true
+resources:
+  Resources:
+    CarbonDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: 'carbon'
